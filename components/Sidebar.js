@@ -34,7 +34,7 @@ export default function Sidebar() {
             </button>
 
             {/*Mini-Profile*/}
-            <div className='hoverEffect text-gray-700 flex items-center justify-start xl:justify-start mt-auto w-56'>
+            <div className='hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto xl:w-56'>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgSmojUgwjIB87c4Q0hLCAyl__oiTySWGWJUZtUNHlHjBALLzTsu_vMHYMaEwLts4QEoo&usqp=CAU"
                     alt="user image" className='w-12 h-12 rounded-full xl:mr-2' />
                 <div className='leading-5 hidden xl:inline'>
