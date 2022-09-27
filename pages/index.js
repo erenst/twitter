@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
+import Widgets from '../components/Widgets';
 
 
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
         {/*Feed*/}
         <Feed />
         {/*Widgets*/}
-
+        <Widgets />
         {/*Modual*/}
       </main>
     </div>
