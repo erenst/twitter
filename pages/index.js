@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
@@ -6,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Widgets from '../components/Widgets';
 
 
-export default function Home({ newsResults }) {
+export default function Home({ newsResults,randomUsersResults }) {
   return (
     <div >
       <Head>
@@ -20,7 +21,7 @@ export default function Home({ newsResults }) {
         {/*Feed*/}
         <Feed />
         {/*Widgets*/}
-        <Widgets news={newsResults.articles} />
+        <Widgets news={newsResults.articles} users={randomUsersResults.results} />
         {/*Modual*/}
       </main>
     </div>
@@ -31,10 +32,12 @@ export default function Home({ newsResults }) {
 export async function getServerSideProps() {
   const newsResults = await fetch("https://saurav.tech/NewsAPI/top-headlines/category/technology/au.json")
     .then((res) => res.json());
-
+  const randomUsersResults = await fetch("https://randomuser.me/api/?results=30&inc=name,login,picture")
+    .then(res => res.json());
   return {
     props: {
-      newsResults
+      newsResults,
+      randomUsersResults
     }
   };
 }
