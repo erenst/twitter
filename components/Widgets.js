@@ -48,7 +48,7 @@ export default function Widgets({ news,users }) {
                                     {user.login.username}
                                 </h4>
                                 <h5 className="text-[13px] text-gray-500 truncate">
-                                    {user.name.userfirst + " " + user.name.last}
+                                    {user.name.first + " " + user.name.last}
                                 </h5>
                             </div>
                             <button className="ml-auto bg-black text-white rounded-full text-sm px-3.5 py-1.5 font-bold">
