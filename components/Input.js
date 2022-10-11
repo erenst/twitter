@@ -60,12 +60,13 @@ export default function Input() {
                     <div className='w-full divide-y divide-gray-300'>
                         <div>
                             <textarea className="w-full border-none focus:ring-0 text-lg placeholder-gray-700 
-                            tracking-wide min-h-[50px] text-gray-700" value={input} onChange={e => setInput(e.target.value)}
+                            tracking-wide min-h-[50px] text-gray-700 placeholder:italic placeholder:text-slate-500"
+                                value={input} onChange={e => setInput(e.target.value)}
                                 rows="3" placeholder='What is happening?'></textarea>
                         </div>
                         {
                             selectedFile && (<div className='relative '>
-                                <XCircleIcon className='h-7 text-gray-300 absolute right-0 top-0 cursor-pointer'
+                                <XCircleIcon className='h-7 text-gray-300 absolute right-0 top-0 cursor-pointer m-1'
                                     onClick={() => setSelectedFile(null)}
                                 />
                                 <img src={selectedFile} alt="" width="100%"
