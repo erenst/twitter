@@ -41,7 +41,7 @@ export default function Sidebar() {
 
                 {/*Mini-Profile*/}
                 <div className='hoverEffect text-gray-700 flex items-center justify-between xl:justify-between mt-auto xl:w-56 '>
-                    <img src={session?.user?.image} onClick={signOut}
+                    <img src={session?.user?.image} onClick={signOut} referrerPolicy="no-referrer"
                         alt="user image" className='w-12 h-12 rounded-full xl:mr-2' />
                     <div className='leading-5 hidden xl:inline'>
                         <h4 className='font-bold'>{session?.user?.name}</h4>
