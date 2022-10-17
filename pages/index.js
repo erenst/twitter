@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
+import CommentModal from '../components/CommentModal';
 import Feed from '../components/Feed';
 import Sidebar from '../components/Sidebar';
 import Widgets from '../components/Widgets';
@@ -23,6 +24,7 @@ export default function Home({ newsResults,randomUsersResults }) {
         {/*Widgets*/}
         <Widgets news={newsResults.articles} users={randomUsersResults.results} />
         {/*Modual*/}
+        <CommentModal />
       </main>
     </div>
   );
