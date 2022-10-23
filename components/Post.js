@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { async } from '@firebase/util';
 import { ChartBarIcon,ChatBubbleOvalLeftEllipsisIcon,EllipsisHorizontalIcon,HeartIcon,ShareIcon,TrashIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as LikedHeartIcon } from "@heroicons/react/24/solid";
 import { collection,deleteDoc,doc,onSnapshot,setDoc } from 'firebase/firestore';
@@ -9,13 +8,14 @@ import { db,storage } from '../firebase';
 import { signIn,useSession } from 'next-auth/react';
 import { deleteObject,ref } from 'firebase/storage';
 import { useRecoilState } from 'recoil';
-import { modalState } from '../atom/modalAtom';
+import { modalState,postIdState } from '../atom/modalAtom';
 
 export default function Post({ post }) {
     const { data: session } = useSession();
     const [ likes,setLikes ] = useState([]);
     const [ hasLiked,setHasLiked ] = useState(false);
     const [ open,setOpen ] = useRecoilState(modalState);
+    const [ postId,setPostId ] = useRecoilState(postIdState);
     useEffect(() => {
         const unsubsribe = onSnapshot(
             collection(db,"posts",post.id,"likes"),(snapeShot) => {
@@ -84,7 +84,15 @@ export default function Post({ post }) {
                 }
                 {/*icons* */}
                 <div className='flex justify-between items-center text-gray-500 p-2 mt-2'>
-                    <ChatBubbleOvalLeftEllipsisIcon onClick={() => { setOpen(!open); }}
+                    <ChatBubbleOvalLeftEllipsisIcon onClick={() => {
+                        if (!session) {
+                            signIn();
+                        } else {
+                            setPostId(post.id);
+                            setOpen(!open);
+                        }
+                    }
+                    }
                         className='h-9 w-9 hoverEffect hover:bg-sky-100 hover:text-sky-500 p-2' />
 
                     {
