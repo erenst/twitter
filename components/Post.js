@@ -16,10 +16,19 @@ export default function Post({ post }) {
     const [ hasLiked,setHasLiked ] = useState(false);
     const [ open,setOpen ] = useRecoilState(modalState);
     const [ postId,setPostId ] = useRecoilState(postIdState);
+    const [ comments,setComments ] = useState([]);
     useEffect(() => {
         const unsubsribe = onSnapshot(
             collection(db,"posts",post.id,"likes"),(snapeShot) => {
                 setLikes(snapeShot.docs);
+            }
+        );
+        return unsubsribe;
+    },[ db ]);
+    useEffect(() => {
+        const unsubsribe = onSnapshot(
+            collection(db,"posts",post.id,"comments"),(snapeShot) => {
+                setComments(snapeShot.docs);
             }
         );
         return unsubsribe;
@@ -57,7 +66,7 @@ export default function Post({ post }) {
             {/*user image*/}
             <img src={post.data().userImg} alt="user image" className='h-11 w-11 rounded-full mr-4' referrerPolicy="no-referrer" />
             {/*right side */}
-            <div className=''>
+            <div className='flex-1'>
                 {/*header*/}
                 <div className='flex items-center justify-between'>
                     {/*post user info*/}
@@ -84,17 +93,22 @@ export default function Post({ post }) {
                 }
                 {/*icons* */}
                 <div className='flex justify-between items-center text-gray-500 p-2 mt-2'>
-                    <ChatBubbleOvalLeftEllipsisIcon onClick={() => {
-                        if (!session) {
-                            signIn();
-                        } else {
-                            setPostId(post.id);
-                            setOpen(!open);
+                    <div className='flex items-center justify-center'>
+                        <ChatBubbleOvalLeftEllipsisIcon onClick={() => {
+                            if (!session) {
+                                signIn();
+                            } else {
+                                setPostId(post.id);
+                                setOpen(!open);
+                            }
+                        }}
+                            className='h-9 w-9 hoverEffect hover:bg-sky-100 hover:text-sky-500 p-2 mr-1' />
+                        {
+                            comments.length > 0 && (
+                                <span className="text-sm select-none cursor-none">{comments.length}</span>
+                            )
                         }
-                    }
-                    }
-                        className='h-9 w-9 hoverEffect hover:bg-sky-100 hover:text-sky-500 p-2' />
-
+                    </div>
                     {
                         session?.user.uid === post?.data().id &&
                         (<TrashIcon onClick={deletePost}
@@ -104,10 +118,10 @@ export default function Post({ post }) {
                     <div className='flex justify-center items-center'>
                         {
                             hasLiked ? (
-                                <LikedHeartIcon onClick={likePost} className='h-9 w-9 hoverEffect text-red-300 hover:bg-red-100 hover:text-red-600 p-2' />
+                                <LikedHeartIcon onClick={likePost} className='h-9 w-9 hoverEffect text-red-300 hover:bg-red-100 hover:text-red-600 p-2 mr-1' />
                             ) :
                                 (
-                                    <HeartIcon onClick={likePost} className='h-9 w-9 hoverEffect hover:bg-red-100 hover:text-red-600 p-2' />
+                                    <HeartIcon onClick={likePost} className='h-9 w-9 hoverEffect hover:bg-red-100 hover:text-red-600 p-2 mr-1' />
                                 )
                         }
                         {
