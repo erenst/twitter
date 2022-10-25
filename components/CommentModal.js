@@ -31,7 +31,7 @@ const CommentModal = () => {
         });
         setInput("");
         setOpen(false);
-        // router.push(`posts/${postId}`);
+        router.push(`posts/${postId}`);
     };
 
     return (
