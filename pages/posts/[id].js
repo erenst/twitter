@@ -7,17 +7,23 @@ import Widgets from "../../components/Widgets";
 import Post from "../../components/Post";
 import { ArrowLeftIcon,} from "@heroicons/react/24/outline";
 import { db } from "../../firebase";
-import { onSnapshot,doc } from "firebase/firestore";
+import { onSnapshot,doc,query,collection,orderBy } from "firebase/firestore";
+import Comment from "../../components/Comment";
 
 export default function PostPage({ newsResults,randomUsersResults }) {
     const router = useRouter();
     const { id } = router.query;
     const [ post,setPost ] = useState(null);
+    const [ comments,setComments ] = useState([]);
     useEffect(() => {
         onSnapshot(doc(db,"posts",id),(snapshot) => {
             setPost(snapshot);
         });
-
+    },[ db,id ]);
+    useEffect(() => {
+        onSnapshot(query(collection(db,"posts",id,"comments"),orderBy("timestamp","desc")),
+            (snapshot) => { setComments(snapshot.docs); }
+        );
     },[ db,id ]);
     return (
         <div>
@@ -40,6 +46,9 @@ export default function PostPage({ newsResults,randomUsersResults }) {
                         <h2 className='text-lg sm:text-xl font-bold cursor-pointer'>Tweet</h2>
                     </div>
                     <Post post={post} id={id} />
+                    {comments.length > 0 && comments.map((comment) =>
+                        <Comment key={comment.id} id={comment.id} comment={comment.data()} />
+                    )}
                 </div>
                 {/*Widgets*/}
                 <Widgets news={newsResults?.articles} users={randomUsersResults?.results} />
