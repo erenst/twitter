@@ -47,7 +47,7 @@ export default function PostPage({ newsResults,randomUsersResults }) {
                     </div>
                     <Post post={post} id={id} />
                     {comments.length > 0 && comments.map((comment) =>
-                        <Comment key={comment.id} id={comment.id} comment={comment.data()} />
+                        <Comment key={comment.id} comment={comment.data()} />
                     )}
                 </div>
                 {/*Widgets*/}

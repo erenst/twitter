@@ -64,7 +64,7 @@ export default function Post({ post,id }) {
         }
     };
     return (
-        <div className='flex p-3 cursor-pointer border-b border-gray-200'>
+        <div className='flex p-3 cursor-pointer border-b border-gray-200' onClick={() => router.push(`/posts/${id}`)}>
             {/*user image*/}
             <img src={post?.data()?.userImg} alt="user image" className='h-11 w-11 rounded-full mr-4' referrerPolicy="no-referrer" />
             {/*right side */}
