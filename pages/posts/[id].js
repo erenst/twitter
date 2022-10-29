@@ -45,7 +45,7 @@ export default function PostPage({ newsResults,randomUsersResults }) {
                         </div>
                         <h2 className='text-lg sm:text-xl font-bold cursor-pointer'>Tweet</h2>
                     </div>
-                    <Post post={post} id={id} />
+                    <Post post={post} id={id} singlePost={true} />
                     {comments.length > 0 && comments.map((comment) =>
                         <Comment key={comment.id} comment={comment.data()} />
                     )}

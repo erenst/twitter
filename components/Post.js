@@ -10,7 +10,7 @@ import { deleteObject,ref } from 'firebase/storage';
 import { useRecoilState } from 'recoil';
 import { modalState,postIdState } from '../atom/modalAtom';
 import { useRouter } from 'next/router';
-export default function Post({ post,id }) {
+export default function Post({ post,id,singlePost }) {
     const { data: session } = useSession();
     const [ likes,setLikes ] = useState([]);
     const [ hasLiked,setHasLiked ] = useState(false);
@@ -63,8 +63,16 @@ export default function Post({ post,id }) {
             router.push("/");
         }
     };
+    const navigate = () => {
+        console.log(singlePost);
+        if (singlePost) {
+            return false;
+        } else {
+            router.push(`/posts/${id}`);
+        }
+    };
     return (
-        <div className='flex p-3 cursor-pointer border-b border-gray-200' onClick={() => router.push(`/posts/${id}`)}>
+        <div className='flex p-3 cursor-pointer border-b border-gray-200' >
             {/*user image*/}
             <img src={post?.data()?.userImg} alt="user image" className='h-11 w-11 rounded-full mr-4' referrerPolicy="no-referrer" />
             {/*right side */}
@@ -87,11 +95,13 @@ export default function Post({ post,id }) {
                     <EllipsisHorizontalIcon className='h-10 w-10 p-2 hoverEffect hover:bg-sky-100 hover:text-sky-500' />
                 </div>
                 {/*post text*/}
-                <p className='text-gray-800 text-[15px] sm:text-[16px] mb-2'>{post?.data()?.text}</p>
+                <p className='text-gray-800 text-[15px] sm:text-[16px] mb-2' onClick={navigate}>
+                    {post?.data()?.text}
+                </p>
                 {/*post image*/}
                 {
                     post?.data()?.image &&
-                    (<img className='rounded-2xl mr-2 w-full object-contain' src={post?.data()?.image} alt="post image" />)
+                    (<img className='rounded-2xl mr-2 w-full object-contain' src={post?.data()?.image} alt="post image" onClick={navigate} />)
                 }
                 {/*icons* */}
                 <div className='flex justify-between items-center text-gray-500 p-2 mt-2'>
